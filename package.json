@@ -1,8 +1,14 @@
 {
-  "name": "bard",
+  "name": "break-bard",
   "version": "1.0.0",
   "description": "Reverse engineering of Google's Bard API",
   "main": "index.js",
+  "keywords": [
+   "google",
+   "bard",
+   "googlebard",
+   "llm"
+ ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
