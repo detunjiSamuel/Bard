@@ -4,11 +4,11 @@
   "description": "Reverse engineering of Google's Bard API",
   "main": "index.js",
   "keywords": [
-   "google",
-   "bard",
-   "googlebard",
-   "llm"
- ],
+    "google",
+    "bard",
+    "googlebard",
+    "llm"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,8 +21,5 @@
   "bugs": {
     "url": "https://github.com/detunjiSamuel/Bard/issues"
   },
-  "homepage": "https://github.com/detunjiSamuel/Bard#readme",
-  "dependencies": {
-    "dotenv": "^16.0.3"
-  }
+  "homepage": "https://github.com/detunjiSamuel/Bard#readme"
 }
