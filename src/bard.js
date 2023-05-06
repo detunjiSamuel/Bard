@@ -58,19 +58,10 @@ class Bard {
 
       if (!response.ok) {
         throw new Error("Could not get Google Bard");
-      }
-
-      
+      }      
       const bodyText = await response.text();
 
-      // console.log(bodyText)
-
-
-      const SNlM0e = bodyText.match(/SNlM0e":"(.*?)"/)// [1];
-
-      console.log(SNlM0e)
-
-      process.exit(0)
+      const SNlM0e = bodyText.match(/SNlM0e":"(.*?)"/)[1];
       return SNlM0e;
     } catch (e) {
       console.error("GET SMILEY FAILED");
@@ -168,9 +159,7 @@ class Bard {
       this.#processQuestionRequest
     );
 
-    print("ask result", result);
-
-    return "answer";
+    return result;
   }
 }
 
