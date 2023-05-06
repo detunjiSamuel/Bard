@@ -1,4 +1,12 @@
+#!/usr/bin/env node
 
+require("dotenv").config();
+
+console.log("session : ", process.env.BARD_SESSION);
+
+const Bard = require("./src/bard.js");
+
+// console.log(new Bard(process.env.BARD_SESSION).ask('What is the meaning of life?'))
 
 /**
  * 
@@ -12,19 +20,12 @@
 
  */
 
-require('dotenv').config()
+module.exports = Bard;
 
-class person {
- constructor(name, age) {
-  this.name = name;
-  this.age = age;
+if (require.main === module) {
+  console.log("CALLED FROM CLI");
+
+  const bard = new Bard(process.env.BARD_SESSION);
+
+  console.log("result:" , bard.ask("What is the meaning of life?"));
 }
- sayName() {
-  console.log(this.name);
- }
-
-}
-
-console.log(process.env.BARD_SESSION)
-
-console.log(new person('John', 25).sayName())
