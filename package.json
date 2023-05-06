@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/detunjiSamuel/Bard/issues"
   },
-  "homepage": "https://github.com/detunjiSamuel/Bard#readme"
+  "homepage": "https://github.com/detunjiSamuel/Bard#readme",
+  "engines" : { 
+   "node" : ">=v18.16.0"
+ }
 }
