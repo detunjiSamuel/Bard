@@ -1,6 +1,6 @@
 {
   "name": "break-bard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reverse engineering of Google's Bard API",
   "main": "index.js",
   "keywords": [
