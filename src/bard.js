@@ -1,6 +1,5 @@
 class Bard {
-  
- constructor(sessionCookie) {
+  constructor(sessionCookie) {
     this.sessionCookie = sessionCookie;
     this.requestId = this.#requestId;
     this.question = "what is the meaning of life?";
@@ -8,15 +7,20 @@ class Bard {
     this.responseId = "";
     this.choiceId = "";
 
-    this.session = this.createSession();
+    this.session = this.#createSession();
 
-    this.SNlM0e =  ""
+    //TODO: check if value has been changed before any request
+    this.SNlM0e = "NOT SET"(async () => {
+      this.SNlM0e = await this.getSmiley();
+    })().catch((error) => {
+      console.error("Failed to get SNlM0e:", error);
+      throw error;
+    });
   }
-
 
   get #requestId() {
     let requestId = "";
-    for (let i = 0 ; i < 4 ; i++){
+    for (let i = 0; i < 4; i++) {
       requestId += `${Math.floor(Math.random() * 10)}`;
     }
     return parseInt(requestId);
@@ -38,6 +42,27 @@ class Bard {
     content[2] = [this.conversationId, this.responseId, this.choiceId];
 
     return content;
+  }
+
+  async getSmiley() {
+    try {
+      const url = "https://bard.google.com/";
+      const response = await fetch(url, {
+        method: "GET",
+        headers: this.session.headers,
+        credentials: thus.session.credentials,
+      });
+
+      if (!response.ok) {
+        throw new Error("Could not get Google Bard");
+      }
+
+      const SNlM0e = response.text().match(/SNlM0e":"(.*?)"/)[1];
+      return SNlM0e;
+    } catch (e) {
+      console.error("GET SMILEY FAILED");
+      throw e;
+    }
   }
 
   get #requestUrl() {
@@ -67,7 +92,7 @@ class Bard {
       "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
       Origin: "https://bard.google.com",
       Referer: "https://bard.google.com/",
-      Cookie: `__Secure-1PSID=${this.sessionCookie}`
+      Cookie: `__Secure-1PSID=${this.sessionCookie}`,
     };
 
     for (const [key, value] of Object.entries(headers)) {
@@ -80,7 +105,7 @@ class Bard {
   async #processQuestionRequest() {
     const data = {
       "f.req": JSON.stringify([null, JSON.stringify(this.#messageContent)]),
-      at: this.SNlM0e ,
+      at: this.SNlM0e,
     };
 
     try {
@@ -95,11 +120,15 @@ class Bard {
     }
   }
 
+  async ask(question) {
+    this.question = question;
 
-  ask(question) {
-   return "answer";
- }
+    const result = await this.#processQuestionRequest();
 
+    print("ask result", result);
+
+    return "answer";
+  }
 }
 
 module.exports = Bard;
