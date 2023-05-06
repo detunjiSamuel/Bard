@@ -11,7 +11,9 @@ class Bard {
 
     this.session = this.#createSession();
 
-    this.SNlM0e = "NOT SET"(async () => {
+    this.SNlM0e = "NOT SET";
+
+    (async () => {
       this.SNlM0e = await this.#getSmiley();
     })().catch((error) => {
       console.error("Failed to get SNlM0e:", error);
@@ -51,14 +53,24 @@ class Bard {
       const response = await fetch(url, {
         method: "GET",
         headers: this.session.headers,
-        credentials: thus.session.credentials,
+        credentials: this.session.credentials,
       });
 
       if (!response.ok) {
         throw new Error("Could not get Google Bard");
       }
 
-      const SNlM0e = response.text().match(/SNlM0e":"(.*?)"/)[1];
+      
+      const bodyText = await response.text();
+
+      // console.log(bodyText)
+
+
+      const SNlM0e = bodyText.match(/SNlM0e":"(.*?)"/)// [1];
+
+      console.log(SNlM0e)
+
+      process.exit(0)
       return SNlM0e;
     } catch (e) {
       console.error("GET SMILEY FAILED");
@@ -113,7 +125,7 @@ class Bard {
       const response = await fetch(this.#requestUrl, {
         method: "POST",
         headers: this.session.headers,
-        credentials: thus.session.credentials,
+        credentials: this.session.credentials,
         body: JSON.stringify({ data }),
       });
 
