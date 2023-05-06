@@ -11,7 +11,6 @@ class Bard {
 
     this.session = this.#createSession();
 
-    //TODO: check if value has been changed before any request
     this.SNlM0e = "NOT SET"(async () => {
       this.SNlM0e = await this.#getSmiley();
     })().catch((error) => {
@@ -117,6 +116,30 @@ class Bard {
         credentials: thus.session.credentials,
         body: JSON.stringify({ data }),
       });
+
+      const content = await response.text();
+      const chatData = JSON.parse(content.split("\n")[3])[0][2];
+
+      if (!chatData) {
+        return { content: `Google Bard encountered an error: ${content}.` };
+      }
+
+      const jsonChatData = JSON.parse(chatData);
+      const results = {
+        content: jsonChatData[0][0],
+        conversation_id: jsonChatData[1][0],
+        response_id: jsonChatData[1][1],
+        factuality_queries: jsonChatData[3],
+        text_query: jsonChatData[2][0] ?? "",
+        choices: jsonChatData[4].map(([id, content]) => ({ id, content })),
+      };
+
+      this.conversationId = results.conversation_id;
+      this.responseId = results.response_id;
+      this.choiceId = results.choices[0].id;
+      this.requestId += 100000;
+
+      return results;
     } catch (e) {
       console.error("error occured in processQuestionRequest", e);
     }
