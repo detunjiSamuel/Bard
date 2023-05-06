@@ -1,3 +1,5 @@
+const delayedAsync = require("./delayedAsync");
+
 class Bard {
   constructor(sessionCookie) {
     this.sessionCookie = sessionCookie;
@@ -11,7 +13,7 @@ class Bard {
 
     //TODO: check if value has been changed before any request
     this.SNlM0e = "NOT SET"(async () => {
-      this.SNlM0e = await this.getSmiley();
+      this.SNlM0e = await this.#getSmiley();
     })().catch((error) => {
       console.error("Failed to get SNlM0e:", error);
       throw error;
@@ -44,7 +46,7 @@ class Bard {
     return content;
   }
 
-  async getSmiley() {
+  async #getSmiley() {
     try {
       const url = "https://bard.google.com/";
       const response = await fetch(url, {
@@ -123,7 +125,13 @@ class Bard {
   async ask(question) {
     this.question = question;
 
-    const result = await this.#processQuestionRequest();
+    const delayPeriod = 5;
+
+    const result = await delayedAsync(
+      this.SNlM0e == "NOT SET",
+      delayPeriod,
+      this.#processQuestionRequest
+    );
 
     print("ask result", result);
 
