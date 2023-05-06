@@ -1,6 +1,7 @@
 class Bard {
-  constructor(sessionId) {
-    this.session = sessionId;
+  
+ constructor(sessionCookie) {
+    this.sessionCookie = sessionCookie;
     this.requestId = this.#requestId;
     this.question = "what is the meaning of life?";
     this.conversationId = "";
@@ -8,12 +9,17 @@ class Bard {
     this.choiceId = "";
 
     this.session = this.createSession();
+
+    this.SNlM0e =  ""
   }
 
 
-
   get #requestId() {
-    return "requestId";
+    let requestId = "";
+    for (let i = 0 ; i < 4 ; i++){
+      requestId += `${Math.floor(Math.random() * 10)}`;
+    }
+    return parseInt(requestId);
   }
 
   get #requestParams() {
@@ -47,8 +53,8 @@ class Bard {
     return url;
   }
 
-  createSession() {
-    session = {
+  #createSession() {
+    let session = {
       headers: new Headers(),
       credentials: "include",
     };
@@ -61,6 +67,7 @@ class Bard {
       "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
       Origin: "https://bard.google.com",
       Referer: "https://bard.google.com/",
+      Cookie: `__Secure-1PSID=${this.sessionCookie}`
     };
 
     for (const [key, value] of Object.entries(headers)) {
@@ -70,10 +77,10 @@ class Bard {
     return session;
   }
 
-  async processQuestionRequest() {
-    data = {
+  async #processQuestionRequest() {
+    const data = {
       "f.req": JSON.stringify([null, JSON.stringify(this.#messageContent)]),
-      at: "something",
+      at: this.SNlM0e ,
     };
 
     try {
