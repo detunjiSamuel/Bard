@@ -4,7 +4,7 @@ class Bard {
   constructor(sessionCookie) {
     this.sessionCookie = sessionCookie;
     this.requestId = this.#requestId;
-    this.question = "what is the meaning of life?";
+    this.question = "";
     this.conversationId = "";
     this.responseId = "";
     this.choiceId = "";
