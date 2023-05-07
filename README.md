@@ -28,6 +28,12 @@ const bard = new Bard(process.env.BARD_SESSION);
  })();
 ```
 
+## Known Errors
+
+- Using a vpn to an unsupported country would break when you initialize Bard
+- Multiple Request at the same time will fail (possible fix : hide request behind queue)
+
+
 
 Credits:
 -- [acheong08](https://github.com/acheong08) - Derivative of his python version
