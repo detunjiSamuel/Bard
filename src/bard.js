@@ -75,11 +75,12 @@ class Bard {
 
     const params = this.#requestParams;
 
+    url += "?"
     for (const [key, value] of Object.entries(params)) {
-      url += `?${key}=${value}`;
+      url += `${key}=${value}&`;
     }
 
-    return url;
+    return url.slice(0, -1);
   }
 
   #createSession() {
